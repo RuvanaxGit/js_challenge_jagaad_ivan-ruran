@@ -5,6 +5,10 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+if (window.Cypress) {
+  window.store = store
+}
+
 new Vue({
   router,
   store,
