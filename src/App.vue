@@ -72,22 +72,6 @@ export default {
       align-items: center;
       flex: 1 0 auto;
       min-height: auto;
-
-      .product-list {
-        display: flex;
-        flex-flow: row wrap;
-        max-width: 1240px;
-        .product-list__item {
-          padding: 10px;
-          flex: 0 1 33.333%;
-          @include mediumScreen {
-            flex: 0 1 50%;
-          }
-          @include smallScreen {
-            flex: 0 1 100%;
-          }
-        }
-      }
     }
 
     .header__container {

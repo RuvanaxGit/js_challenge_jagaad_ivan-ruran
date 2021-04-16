@@ -1,13 +1,13 @@
 <template>
   <div data-cy="bag-route" class="bag">
-    <div class="bug-list" v-if="bagList.length">
+    <div class="bug-list" v-if="bagList.length" data-cy="bag-list">
       <div class="bug-list__item" v-for="product in bagList" :key="product.uuid">
         <div class="item">
           <div class="item__image-wrapper">
             <img class="item__image" :src="handleGetImageUrl(product)" alt="Product">
           </div>
           <div class="item__details">
-            <div class="cross" @click="handleUpdateBugList(product)">&#10060;</div>
+            <div class="close" data-cy="delete-from-bug-button" @click="handleUpdateBugList(product)"></div>
             <div class="item__title">
               {{product.title}}
             </div>
@@ -22,9 +22,9 @@
           </div>
         </div>
       </div>
-      <div class="subtotal">
+      <div class="item__subtotal">
         <div>CART SUBTOTAL:</div>
-        <div>€{{totalBagPrice}}</div>
+        <div class="item__subtotal-price" data-cy="total-of-mini-bag">€{{totalBagPrice}}</div>
       </div>
     </div>
     <div class="empty-message" v-else>
@@ -61,6 +61,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import "src/assets/scss/globalVariables";
   .bag {
     display: flex;
     justify-content: center;
@@ -72,32 +73,37 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
-      max-width: 600px;
+      max-width: 650px;
       flex: 0 1 auto;
       height: auto;
-      border: 1px solid #d9d9d9;
+      border: 1px solid $secondary-white-color;
       overflow: hidden;
-      background-color: #fff;
+      background-color: $main-white-color;
 
       .bug-list__item {
         display: flex;
         justify-content: left;
-        margin: 1px 0 3px 10px;
+        min-height: 140px;
+        margin: 5px 0 3px 0;
         width: 100%;
       }
 
       .item {
         display: flex;
         width: 100%;
+        border-bottom: 1px solid $secondary-white-color;
 
         .item__image-wrapper {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
           overflow: hidden;
           flex: 0 0 33.333%;
           position: relative;
 
           .item__image {
             width: 100%;
-            height: 100%;
+            max-height: 100%;
           }
         }
 
@@ -116,16 +122,46 @@ export default {
             cursor: pointer;
           }
 
+          .close{
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+          }
+
+          .close:before,
+          .close:after {
+            content: "";
+            position: absolute;
+            top: 12px;
+            left: 6px;
+            width: 14px;
+            height: 3px;
+            background: $alert-color;
+          }
+
+          .close:before {
+            transform: rotate(45deg);
+          }
+
+          .close:after {
+            transform: rotate(-45deg);
+          }
+
           .item__title {
-            padding-bottom: 10px;
+            flex: 1 0 auto;
+            padding: 0 10px 5px 1px;
             font-family: 'Lato-Bold', sans-serif;
             font-size: 12px;
             letter-spacing: 1.37px;
             text-transform: uppercase;
+            font-weight: 600;
           }
 
           .item__price {
-            padding-bottom: 20px;
+            padding-bottom: 5px;
             font-family: 'Lato-Bold', sans-serif;
             font-size: 14px;
             letter-spacing: 2.33px;
@@ -133,19 +169,22 @@ export default {
         }
 
         .item__price--discounted {
-          color: #F54B5E;
+          color: $alert-color;
         }
       }
 
-      .subtotal {
+      .item__subtotal {
         display: flex;
         justify-content: space-between;
-        border-top: 1px solid #d9d9d9;
         width: 100%;
-        padding: 30px 15px;
+        padding: 32px 25px;
         font-size: 17px;
         font-weight: bold;
         letter-spacing: 1.37px;
+
+        .item__subtotal-price {
+          font-size: 20px;
+        }
       }
     }
   }

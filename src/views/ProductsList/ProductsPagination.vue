@@ -49,7 +49,7 @@ export default {
       paginatedData.unshift(1)
       paginatedData.push(this.count)
       paginatedData = [...new Set(paginatedData)]
-      if (this.currentPage > this.limit) {
+      if (this.currentPage > 2) {
         paginatedData.splice(1, 0, null)
       }
       if (this.currentPage < this.count - this.limit) {
