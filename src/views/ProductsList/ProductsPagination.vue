@@ -1,7 +1,7 @@
 <template>
   <nav class="pagination" data-cy="paginator">
     <ul class="pagination__list">
-      <li class="pagination__item" @click="handleGoBack" data-cy="paginator-arrow-left">
+      <li class="pagination__item" :class="{'inactive__item': disabledLeftArrow}" @click="handleGoBack" data-cy="paginator-arrow-left">
         <img src="../../assets/img/svg/arrow-left.svg" alt="" />
       </li>
       <li v-for="(item, index) in paginatedData" class="pagination__item"
@@ -10,7 +10,7 @@
           :key="index + 'num'" @click="handleSetPage(item)">
         {{item ? item: '...'}}
       </li>
-      <li class="pagination__item" @click="handleGoForward" data-cy="paginator-arrow-right">
+      <li class="pagination__item" :class="{'inactive__item': disabledRightArrow}" @click="handleGoForward" data-cy="paginator-arrow-right">
         <img src="../../assets/img/svg/arrow-right.svg" alt="" />
       </li>
     </ul>
@@ -70,6 +70,14 @@ export default {
 
     count () {
       return Math.ceil(this.activitiesCount / ACTIVITIES_LIMIT)
+    },
+
+    disabledLeftArrow () {
+      return this.currentPage === 1
+    },
+
+    disabledRightArrow () {
+      return this.currentPage === this.count
     }
   },
 
@@ -85,15 +93,19 @@ export default {
     },
 
     handleGoBack () {
-      this.currentPage--
-      this.handleGetAvailableActivities((this.currentPage - 1) * ACTIVITIES_LIMIT)
-      this.updateRoute()
+      if (!this.disabledLeftArrow) {
+        this.currentPage--
+        this.handleGetAvailableActivities((this.currentPage - 1) * ACTIVITIES_LIMIT)
+        this.updateRoute()
+      }
     },
 
     handleGoForward () {
-      this.currentPage++
-      this.handleGetAvailableActivities((this.currentPage - 1) * ACTIVITIES_LIMIT)
-      this.updateRoute()
+      if (!this.disabledRightArrow) {
+        this.currentPage++
+        this.handleGetAvailableActivities((this.currentPage - 1) * ACTIVITIES_LIMIT)
+        this.updateRoute()
+      }
     },
 
     handleSetPage (num) {
@@ -161,6 +173,11 @@ export default {
           text-decoration: none;
           pointer-events: none;
         }
+      }
+
+      .inactive__item {
+        cursor: default;
+        opacity: .3;
       }
     }
   }

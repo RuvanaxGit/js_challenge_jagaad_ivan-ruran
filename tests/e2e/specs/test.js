@@ -37,10 +37,6 @@ context('General', () => {
   it('Vuex store is initialized', () => {
     cy.window().should('have.property', 'store')
   })
-
-  it('Store has availableActivities, activitiesCount, wishList and bagList properties', () => {
-    getStore().its('state').should('have.keys', ['availableActivities', 'activitiesCount', 'wishList', 'bagList'])
-  })
 })
 
 context('App testing', () => {

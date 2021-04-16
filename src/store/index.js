@@ -10,7 +10,8 @@ export default new Vuex.Store({
     availableActivities: [],
     activitiesCount: 0,
     wishList: [],
-    bagList: []
+    bagList: [],
+    isLoading: false
   },
   getters: {
     wishListCount: state => state.wishList.length,
@@ -41,16 +42,22 @@ export default new Vuex.Store({
       } else {
         state.bagList = [...state.bagList, payload]
       }
+    },
+    SET_LOADING_STATUS (state, payload) {
+      state.isLoading = payload
     }
   },
   actions: {
     handleGetAvailableActivities ({ commit }, payload) {
+      commit('SET_LOADING_STATUS', true)
       return new Promise((resolve, reject) => {
         getAvailableActivities({ limit: ACTIVITIES_LIMIT, offset: payload || 0 }).then(response => {
           commit('SET_AVAILABLE_ACTIVITIES', response.data)
           resolve(response)
         }).catch((errors) => {
           reject(errors)
+        }).finally(() => {
+          commit('SET_LOADING_STATUS', false)
         })
       })
     }

@@ -4,6 +4,7 @@
     <main>
       <router-view></router-view>
     </main>
+    <Loader></Loader>
     <ProductFooter></ProductFooter>
   </div>
 </template>
@@ -11,19 +12,20 @@
 <script>
 import ProductsHeader from '@/views/ProductsHeader'
 import ProductFooter from '@/views/ProductFooter'
+import Loader from '@/components/Loader'
 
 export default {
   name: 'App',
   components: {
     ProductFooter,
-    ProductsHeader
+    ProductsHeader,
+    Loader
   }
 }
 </script>
 
 <style lang="scss">
   @import "assets/scss/main.scss";
-  @import "assets/css/main.css";
   @import "assets/scss/breakpoints";
 
   html {
