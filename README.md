@@ -17,7 +17,7 @@ npm install
 ### 3. Run the app
 
 ```
-npm run dev
+npm run serve
 ```
 
 App will be opened in browser at `http://localhost:8080/`
@@ -37,7 +37,7 @@ The output will be at `dist/` folder
 npm install
 
 # serve with hot reload at localhost:8080
-npm run dev
+npm run serve
 
 # build for production with minification
 npm run build
